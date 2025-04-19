@@ -3,10 +3,8 @@ package com.adilhanney.replaceblocksmod.commands;
 import net.minecraft.command.argument.BlockStateArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 import static net.minecraft.server.command.CommandManager.*;
 
@@ -35,17 +33,29 @@ public abstract class ReplaceBlocksCommand {
    */
   private static int execute(CommandContext<ServerCommandSource> context) {
     final var source = context.getSource();
+    final var player = source.getPlayer();
 
     // Get arguments
-    final var sourceBlock = BlockStateArgumentType.getBlockState(context, "sourceBlock")
-        .getBlockState()
-        .getBlock();
-    final var targetBlock = BlockStateArgumentType.getBlockState(context, "targetBlock")
-        .getBlockState()
-        .getBlock();
+    final var sourceBlockState = BlockStateArgumentType.getBlockState(context, "sourceBlock").getBlockState();
+    final var sourceBlock = sourceBlockState.getBlock();
+    final var targetBlockState = BlockStateArgumentType.getBlockState(context, "targetBlock").getBlockState();
+    final var targetBlock = targetBlockState.getBlock();
+
+    if (sourceBlockState.isAir()) {
+      // Name and shame the player for griefing
+      source.sendFeedback(() -> {
+        final var playerName = player != null ? player.getName() : Text.literal("anon");
+        final var targetBlockName = targetBlock.getName();
+        return Text.literal("Replacing air with ")
+            .append(targetBlockName)
+            .append(" is not allowed, ")
+            .append(playerName)
+            .append("!");
+      }, true);
+      return 0;
+    }
 
     final var world = source.getWorld();
-    final var player = source.getPlayer();
     final var playerPos = player != null ? player.getBlockPos() : world.getSpawnPos();
 
     var replaced = 0;
