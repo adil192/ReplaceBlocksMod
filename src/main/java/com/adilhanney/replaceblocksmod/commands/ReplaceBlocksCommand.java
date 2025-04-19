@@ -1,6 +1,6 @@
 package com.adilhanney.replaceblocksmod.commands;
 
-import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.command.argument.BlockStateArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.registry.Registries;
@@ -15,9 +15,9 @@ public abstract class ReplaceBlocksCommand {
     CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
         literal("replace")
             .requires(source -> source.hasPermissionLevel(2))
-            .then(argument("sourceBlock", StringArgumentType.string())
+            .then(argument("sourceBlock", BlockStateArgumentType.blockState(registryAccess))
                 .then(literal("with")
-                    .then(argument("targetBlock", StringArgumentType.string())
+                    .then(argument("targetBlock", BlockStateArgumentType.blockState(registryAccess))
                         .executes(ReplaceBlocksCommand::execute)
                     )))));
   }
@@ -36,23 +36,13 @@ public abstract class ReplaceBlocksCommand {
   private static int execute(CommandContext<ServerCommandSource> context) {
     final var source = context.getSource();
 
-    // Try to parse source block
-    final var sourceBlockArg = StringArgumentType.getString(context, "sourceBlock");
-    final var sourceBlockId = Identifier.tryParse(sourceBlockArg);
-    if (sourceBlockId == null || !Registries.BLOCK.containsId(sourceBlockId)) {
-      source.sendFeedback(() -> Text.literal("Invalid source block: " + sourceBlockArg), false);
-      return 0;
-    }
-    final var sourceBlock = Registries.BLOCK.get(sourceBlockId);
-
-    // Try to parse target block
-    final var targetBlockArg = StringArgumentType.getString(context, "targetBlock");
-    final var targetBlockId = Identifier.tryParse(targetBlockArg);
-    if (targetBlockId == null || !Registries.BLOCK.containsId(targetBlockId)) {
-      source.sendFeedback(() -> Text.literal("Invalid target block: " + targetBlockArg), false);
-      return 0;
-    }
-    final var targetBlock = Registries.BLOCK.get(targetBlockId);
+    // Get arguments
+    final var sourceBlock = BlockStateArgumentType.getBlockState(context, "sourceBlock")
+        .getBlockState()
+        .getBlock();
+    final var targetBlock = BlockStateArgumentType.getBlockState(context, "targetBlock")
+        .getBlockState()
+        .getBlock();
 
     final var world = source.getWorld();
     final var player = source.getPlayer();
