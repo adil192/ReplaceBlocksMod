@@ -1,5 +1,6 @@
 package com.adilhanney.replaceblocksmod.commands;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.BlockStateArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -16,7 +17,11 @@ public abstract class ReplaceBlocksCommand {
             .then(argument("sourceBlock", BlockStateArgumentType.blockState(registryAccess))
                 .then(literal("with")
                     .then(argument("targetBlock", BlockStateArgumentType.blockState(registryAccess))
-                        .executes(ReplaceBlocksCommand::execute)
+                        .executes(context -> {
+                          final var sourceBlockState = BlockStateArgumentType.getBlockState(context, "sourceBlock").getBlockState();
+                          final var targetBlockState = BlockStateArgumentType.getBlockState(context, "targetBlock").getBlockState();
+                          return replaceBlocks(context, sourceBlockState, targetBlockState);
+                        })
                     )))));
   }
 
@@ -28,17 +33,19 @@ public abstract class ReplaceBlocksCommand {
    * Executes the replace blocks command, replacing all the nearby source blocks
    * with the target block in the game world.
    *
-   * @param context the command context containing the server command source
+   * @param context          the command context containing the server command source
+   * @param sourceBlockState the source block to be replaced
+   * @param targetBlockState the desired target block
    * @return The number of blocks replaced
    */
-  private static int execute(CommandContext<ServerCommandSource> context) {
+  private static int replaceBlocks(
+      CommandContext<ServerCommandSource> context,
+      BlockState sourceBlockState,
+      BlockState targetBlockState
+  ) {
     final var source = context.getSource();
     final var player = source.getPlayer();
-
-    // Get arguments
-    final var sourceBlockState = BlockStateArgumentType.getBlockState(context, "sourceBlock").getBlockState();
     final var sourceBlock = sourceBlockState.getBlock();
-    final var targetBlockState = BlockStateArgumentType.getBlockState(context, "targetBlock").getBlockState();
     final var targetBlock = targetBlockState.getBlock();
 
     if (sourceBlockState.isAir()) {
