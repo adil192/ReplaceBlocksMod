@@ -19,8 +19,8 @@ public class RemoveGrassCommand {
   }
 
   private static final int X_RADIUS = 50;
-  private static final int Y_RADIUS = 10;
   private static final int Z_RADIUS = X_RADIUS;
+  private static final int Y_RADIUS = 10;
 
   private static final Block air = Registries.BLOCK.get(Identifier.of("minecraft:air"));
   private static final Block shortGrass = Registries.BLOCK.get(Identifier.of("minecraft:short_grass"));
@@ -41,13 +41,16 @@ public class RemoveGrassCommand {
 
     var removed = 0;
     for (var dx = -X_RADIUS; dx <= X_RADIUS; dx++) {
-      for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
-        for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
+      for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
+        for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
           final var blockPos = playerPos.add(dx, dy, dz);
           final var blockState = world.getBlockState(blockPos);
           if (blockState.isOf(shortGrass) || blockState.isOf(tallGrass)) {
             world.setBlockState(blockPos, air.getDefaultState());
             ++removed;
+          } else if (dy > 0 && blockState.isAir()) {
+            // There probably is no grass above here, so move on
+            break;
           }
         }
       }

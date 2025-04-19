@@ -26,8 +26,8 @@ public abstract class ReplaceBlocksCommand {
   }
 
   private static final int X_RADIUS = 50;
-  private static final int Y_RADIUS = 10;
   private static final int Z_RADIUS = X_RADIUS;
+  private static final int Y_RADIUS = 10;
 
   /**
    * Executes the replace blocks command, replacing all the nearby source blocks
@@ -67,8 +67,8 @@ public abstract class ReplaceBlocksCommand {
 
     var replaced = 0;
     for (var dx = -X_RADIUS; dx <= X_RADIUS; dx++) {
-      for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
-        for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
+      for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
+        for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
           var blockPos = playerPos.add(dx, dy, dz);
           if (world.getBlockState(blockPos).isOf(sourceBlock)) {
             world.setBlockState(blockPos, targetBlock.getDefaultState());
