@@ -1,5 +1,6 @@
 package com.adilhanney.replaceblocksmod;
 
+import com.adilhanney.replaceblocksmod.commands.RemoveGrassCommand;
 import com.adilhanney.replaceblocksmod.commands.ReplaceBlocksCommand;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,7 +13,8 @@ public class ReplaceBlocksMod implements ModInitializer {
 
   @Override
   public void onInitialize() {
-    LOGGER.info("Hello Fabric world!");
+    LOGGER.info("Initializing commands for " + MOD_ID);
     ReplaceBlocksCommand.initialize();
+    RemoveGrassCommand.initialize();
   }
 }

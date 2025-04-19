@@ -33,9 +33,9 @@ public abstract class ReplaceBlocksCommand {
    * Executes the replace blocks command, replacing all the nearby source blocks
    * with the target block in the game world.
    *
-   * @param context          the command context containing the server command source
-   * @param sourceBlockState the source block to be replaced
-   * @param targetBlockState the desired target block
+   * @param context          The command context
+   * @param sourceBlockState The source block to be replaced
+   * @param targetBlockState The desired target block
    * @return The number of blocks replaced
    */
   private static int replaceBlocks(
