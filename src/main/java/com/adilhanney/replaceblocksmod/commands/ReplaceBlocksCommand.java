@@ -79,7 +79,7 @@ public abstract class ReplaceBlocksCommand {
     }
 
     final var finalReplaced = replaced;
-    source.sendFeedback(() -> Text.literal("Replaced " + finalReplaced + " blocks"), true);
+    source.sendFeedback(() -> Text.literal("Replaced " + finalReplaced + " blocks"), finalReplaced > 0);
     return finalReplaced;
   }
 
