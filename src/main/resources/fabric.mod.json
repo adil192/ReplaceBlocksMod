@@ -21,9 +21,6 @@
       "com.adilhanney.replaceblocksmod.ReplaceBlocksModDataGenerator"
     ]
   },
-  "mixins": [
-    "replaceblocksmod.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=0.16.11",
     "minecraft": "~1.21.1",
