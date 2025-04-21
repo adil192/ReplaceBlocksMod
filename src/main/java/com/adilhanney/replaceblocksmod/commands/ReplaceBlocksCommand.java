@@ -79,7 +79,16 @@ public abstract class ReplaceBlocksCommand {
     }
 
     final var finalReplaced = replaced;
-    source.sendFeedback(() -> Text.literal("Replaced " + finalReplaced + " blocks"), finalReplaced > 0);
+    source.sendFeedback(() -> {
+      final var playerName = player != null ? player.getName().copy() : Text.literal("anon");
+      return playerName
+          .append(" replaced ")
+          .append(Integer.toString(finalReplaced))
+          .append(" ")
+          .append(sourceBlock.getName())
+          .append(" with ")
+          .append(targetBlock.getName());
+    }, finalReplaced > 0);
     return finalReplaced;
   }
 

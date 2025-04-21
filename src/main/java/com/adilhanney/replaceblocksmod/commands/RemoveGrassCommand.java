@@ -57,7 +57,13 @@ public class RemoveGrassCommand {
     }
 
     final var finalRemoved = removed;
-    source.sendFeedback(() -> Text.literal("Removed " + finalRemoved + " weeds"), finalRemoved > 0);
+    source.sendFeedback(() -> {
+      final var playerName = player != null ? player.getName().copy() : Text.literal("anon");
+      return playerName
+          .append(" removed ")
+          .append(Integer.toString(finalRemoved))
+          .append(" weeds");
+    }, finalRemoved > 0);
     return finalRemoved;
   }
 
