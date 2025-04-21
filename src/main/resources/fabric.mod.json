@@ -16,9 +16,6 @@
   "entrypoints": {
     "main": [
       "com.adilhanney.replaceblocksmod.ReplaceBlocksMod"
-    ],
-    "fabric-datagen": [
-      "com.adilhanney.replaceblocksmod.ReplaceBlocksModDataGenerator"
     ]
   },
   "depends": {
