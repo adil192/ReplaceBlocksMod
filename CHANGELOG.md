@@ -1,8 +1,8 @@
-## v1.1.0
+## v1.0.2
 
 - Added more descriptive feedback, e.g.
-    - 'steve replaced 12 Block of Iron with Block of Emerald'
-    - 'steve removed 12 weeds'
+  - 'Steve123 replaced 4816 Oak Leaves with Cherry Leaves'
+  - 'Steve123 removed 125 weeds'
 
 ## v1.0.1
 
