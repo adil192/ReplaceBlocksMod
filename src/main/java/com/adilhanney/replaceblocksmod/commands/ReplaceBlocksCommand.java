@@ -53,12 +53,11 @@ public abstract class ReplaceBlocksCommand {
       // Name and shame the player for griefing
       source.sendFeedback(() -> {
         final var playerName = getPlayerName(player);
-        final var targetBlockName = targetBlock.getName();
-        return Text.literal("Replacing air with ")
-            .append(targetBlockName)
-            .append(" is not allowed, ")
-            .append(playerName)
-            .append("!");
+        return Text.translatable(
+            "feedback.replaceblocksmod.notReplacingAir",
+            targetBlock.getName(),
+            playerName
+        );
       }, true);
       return 0;
     }
@@ -82,13 +81,13 @@ public abstract class ReplaceBlocksCommand {
     final var finalReplaced = replaced;
     source.sendFeedback(() -> {
       final var playerName = getPlayerName(player);
-      return playerName
-          .append(" replaced ")
-          .append(Integer.toString(finalReplaced))
-          .append(" ")
-          .append(sourceBlock.getName())
-          .append(" with ")
-          .append(targetBlock.getName());
+      return Text.translatable(
+          "feedback.replaceblocksmod.replacedBlocks",
+          playerName,
+          finalReplaced,
+          sourceBlock.getName(),
+          targetBlock.getName()
+      );
     }, finalReplaced > 0);
     return finalReplaced;
   }

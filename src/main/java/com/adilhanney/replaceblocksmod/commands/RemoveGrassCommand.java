@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static com.adilhanney.replaceblocksmod.ReplaceBlocksUtils.*;
@@ -59,10 +60,11 @@ public class RemoveGrassCommand {
     final var finalRemoved = removed;
     source.sendFeedback(() -> {
       final var playerName = getPlayerName(player);
-      return playerName
-          .append(" removed ")
-          .append(Integer.toString(finalRemoved))
-          .append(" weeds");
+      return Text.translatable(
+          "feedback.replaceblocksmod.removedGrass",
+          playerName,
+          finalRemoved
+      );
     }, finalRemoved > 0);
     return finalRemoved;
   }

@@ -1,0 +1,6 @@
+{
+  "feedback.replaceblocksmod.fallbackPlayerName": "anon",
+  "feedback.replaceblocksmod.removedGrass": "%s removed %s weeds",
+  "feedback.replaceblocksmod.notReplacingAir": "Replacing air with %s is not allowed, %s!",
+  "feedback.replaceblocksmod.replacedBlocks": "%s replaced %s %s with %s"
+}
