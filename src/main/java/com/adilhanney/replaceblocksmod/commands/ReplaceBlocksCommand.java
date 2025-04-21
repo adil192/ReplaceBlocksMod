@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
+import static com.adilhanney.replaceblocksmod.ReplaceBlocksUtils.*;
 import static net.minecraft.server.command.CommandManager.*;
 
 public abstract class ReplaceBlocksCommand {
@@ -51,7 +52,7 @@ public abstract class ReplaceBlocksCommand {
     if (sourceBlockState.isAir()) {
       // Name and shame the player for griefing
       source.sendFeedback(() -> {
-        final var playerName = player != null ? player.getName() : Text.literal("anon");
+        final var playerName = getPlayerName(player);
         final var targetBlockName = targetBlock.getName();
         return Text.literal("Replacing air with ")
             .append(targetBlockName)
@@ -80,7 +81,7 @@ public abstract class ReplaceBlocksCommand {
 
     final var finalReplaced = replaced;
     source.sendFeedback(() -> {
-      final var playerName = player != null ? player.getName().copy() : Text.literal("anon");
+      final var playerName = getPlayerName(player);
       return playerName
           .append(" replaced ")
           .append(Integer.toString(finalReplaced))

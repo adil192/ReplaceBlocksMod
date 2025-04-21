@@ -5,10 +5,10 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static net.minecraft.server.command.CommandManager.literal;
+import static com.adilhanney.replaceblocksmod.ReplaceBlocksUtils.*;
+import static net.minecraft.server.command.CommandManager.*;
 
 public class RemoveGrassCommand {
   public static void initialize() {
@@ -58,7 +58,7 @@ public class RemoveGrassCommand {
 
     final var finalRemoved = removed;
     source.sendFeedback(() -> {
-      final var playerName = player != null ? player.getName().copy() : Text.literal("anon");
+      final var playerName = getPlayerName(player);
       return playerName
           .append(" removed ")
           .append(Integer.toString(finalRemoved))
