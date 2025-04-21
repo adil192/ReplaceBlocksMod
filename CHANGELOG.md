@@ -1,3 +1,8 @@
+## v1.0.3
+
+- Added translation support to messages
+- Player names in messages are now clickable
+
 ## v1.0.2
 
 - Added more descriptive feedback, e.g.
