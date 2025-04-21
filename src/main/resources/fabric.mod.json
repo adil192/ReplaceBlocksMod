@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "icon": "assets/replaceblocksmod/icon.png",
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "com.adilhanney.replaceblocksmod.ReplaceBlocksMod"
