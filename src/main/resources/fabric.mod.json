@@ -3,17 +3,16 @@
   "id": "replaceblocksmod",
   "version": "${version}",
   "name": "ReplaceBlocksMod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Some handy easy-to-use commands to solve Minecraft's annoyances",
   "authors": [
-    "Me!"
+    "adil192"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/adil192/ReplaceBlocksMod"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/replaceblocksmod/icon.png",
-  "environment": "*",
+  "environment": "server",
   "entrypoints": {
     "main": [
       "com.adilhanney.replaceblocksmod.ReplaceBlocksMod"
@@ -30,8 +29,5 @@
     "minecraft": "~1.21.1",
     "java": ">=21",
     "fabric-api": "*"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
