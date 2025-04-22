@@ -1,13 +1,13 @@
-# Automatically build the project for every push
+# Automatically run tests for every push
 # and submitted pull request. This can help catch issues that only occur on
 # certain platforms or Java versions, and provides a first line of defence
 # against bad commits.
 
-name: build
+name: test
 on: [pull_request, push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
@@ -22,7 +22,7 @@ jobs:
           distribution: 'microsoft'
 
       - name: setup cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             .gradle/
@@ -31,8 +31,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: build
-        run: ./gradlew build
+      - name: Run tests
+        run: ./gradlew test
 
       - name: upload build artifacts
         uses: actions/upload-artifact@v4
