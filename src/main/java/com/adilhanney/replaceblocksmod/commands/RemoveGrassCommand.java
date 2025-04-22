@@ -23,9 +23,9 @@ public class RemoveGrassCommand {
   private static final int Z_RADIUS = X_RADIUS;
   private static final int Y_RADIUS = 10;
 
-  private static final Block air = Registries.BLOCK.get(Identifier.of("minecraft:air"));
-  private static final Block shortGrass = Registries.BLOCK.get(Identifier.of("minecraft:short_grass"));
-  private static final Block tallGrass = Registries.BLOCK.get(Identifier.of("minecraft:tall_grass"));
+  public static final Block air = Registries.BLOCK.get(Identifier.of("minecraft:air"));
+  public static final Block shortGrass = Registries.BLOCK.get(Identifier.of("minecraft:short_grass"));
+  public static final Block tallGrass = Registries.BLOCK.get(Identifier.of("minecraft:tall_grass"));
 
   /**
    * Removes short and tall grass near the player.
@@ -34,7 +34,7 @@ public class RemoveGrassCommand {
    * @param context The command context
    * @return The number of blocks removed
    */
-  private static int removeGrass(CommandContext<ServerCommandSource> context) {
+  public static int removeGrass(CommandContext<ServerCommandSource> context) {
     final var source = context.getSource();
     final var player = source.getPlayer();
     final var world = source.getWorld();
