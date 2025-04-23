@@ -1,3 +1,8 @@
+## v1.1.0
+
+- Replacing blocks with air is now treated as breaking the block
+- Fixed window panes, fences, and similar blocks not connecting to neighboring walls with commands like `/replace ___ with glass_plane`
+
 ## v1.0.3
 
 - Added translation support to messages
