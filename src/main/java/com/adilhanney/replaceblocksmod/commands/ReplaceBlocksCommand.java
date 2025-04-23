@@ -5,8 +5,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.BlockStateArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.Direction;
 
 import static com.adilhanney.replaceblocksmod.ReplaceBlocksUtils.*;
 import static net.minecraft.server.command.CommandManager.*;
@@ -73,7 +78,7 @@ public abstract class ReplaceBlocksCommand {
           final var blockPos = playerPos.add(dx, dy, dz);
           final var oldBlockState = world.getBlockState(blockPos);
           if (oldBlockState.isOf(sourceBlock)) {
-            final var newBlockState = targetBlock.getDefaultState();
+            final var newBlockState = createBlockState(targetBlock, blockPos, player);
             Block.replace(oldBlockState, newBlockState, world, blockPos, Block.NOTIFY_ALL_AND_REDRAW);
             ++replaced;
           }
