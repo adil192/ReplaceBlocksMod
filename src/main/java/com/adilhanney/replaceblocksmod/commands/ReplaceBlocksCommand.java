@@ -1,5 +1,6 @@
 package com.adilhanney.replaceblocksmod.commands;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.argument.BlockStateArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -69,9 +70,11 @@ public abstract class ReplaceBlocksCommand {
     for (var dx = -X_RADIUS; dx <= X_RADIUS; dx++) {
       for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
         for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
-          var blockPos = playerPos.add(dx, dy, dz);
-          if (world.getBlockState(blockPos).isOf(sourceBlock)) {
-            world.setBlockState(blockPos, targetBlock.getDefaultState());
+          final var blockPos = playerPos.add(dx, dy, dz);
+          final var oldBlockState = world.getBlockState(blockPos);
+          if (oldBlockState.isOf(sourceBlock)) {
+            final var newBlockState = targetBlock.getDefaultState();
+            Block.replace(oldBlockState, newBlockState, world, blockPos, Block.NOTIFY_ALL_AND_REDRAW);
             ++replaced;
           }
         }

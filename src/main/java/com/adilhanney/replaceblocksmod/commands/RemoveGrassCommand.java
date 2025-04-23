@@ -45,12 +45,13 @@ public class RemoveGrassCommand {
       for (var dz = -Z_RADIUS; dz <= Z_RADIUS; dz++) {
         for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
           final var blockPos = playerPos.add(dx, dy, dz);
-          final var blockState = world.getBlockState(blockPos);
-          if (blockState.isOf(shortGrass) || blockState.isOf(tallGrass)) {
-            world.setBlockState(blockPos, air.getDefaultState());
+          final var oldBlockState = world.getBlockState(blockPos);
+          if (oldBlockState.isOf(shortGrass) || oldBlockState.isOf(tallGrass)) {
+            final var newBlockState = air.getDefaultState();
+            Block.replace(oldBlockState, newBlockState, world, blockPos, Block.NOTIFY_ALL_AND_REDRAW);
             ++removed;
-          } else if (dy > 0 && blockState.isAir()) {
-            // There probably is no grass above here, so move on
+          } else if (dy > 0 && oldBlockState.isAir()) {
+            // There probably is no grass above here, so move on to next y
             break;
           }
         }
