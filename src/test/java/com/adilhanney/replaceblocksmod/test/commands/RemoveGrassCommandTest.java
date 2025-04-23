@@ -4,7 +4,6 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.Bootstrap;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,7 +15,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import static com.adilhanney.replaceblocksmod.commands.RemoveGrassCommand.*;
 
@@ -35,27 +34,24 @@ public class RemoveGrassCommandTest {
   void testRemoveGrass() {
     final var context = createCommandContext();
 
-    final var modifiedBlocks = new HashMap<BlockPos, BlockState>();
+    final var removedBlockPositions = new ArrayList<BlockPos>();
     final var world = context.getSource().getWorld();
-    Mockito.when(world.setBlockState(Mockito.any(), Mockito.any())).then(invocation -> {
-      modifiedBlocks.put(invocation.getArgument(0), invocation.getArgument(1));
+    Mockito.when(world.breakBlock(Mockito.any(), Mockito.anyBoolean(), Mockito.isNull(), Mockito.anyInt())).then(invocation -> {
+      removedBlockPositions.add(invocation.getArgument(0));
       return null;
     });
 
     final var removed = removeGrass(context);
     Assertions.assertEquals(3, removed);
-    Assertions.assertEquals(3, modifiedBlocks.size());
 
-    for (var blockPos : modifiedBlocks.keySet()) {
-      final var blockState = modifiedBlocks.get(blockPos);
-      if (blockPos.equals(playerPos)) {
-        Assertions.assertEquals(air, blockState.getBlock());
-      } else if (blockPos.equals(playerPos.add(1, 0, 0)) || blockPos.equals(playerPos.add(-1, 0, 0))) {
-        Assertions.assertEquals(air, blockState.getBlock());
-      } else {
-        Assertions.fail();
-      }
+    for (var blockPos : removedBlockPositions) {
+      Assertions.assertAll(
+          () -> Assertions.assertEquals(playerPos.getY(), blockPos.getY()),
+          () -> Assertions.assertEquals(playerPos.getZ(), blockPos.getZ()),
+          () -> Assertions.assertTrue(playerPos.getX() - 1 <= blockPos.getX() && blockPos.getX() <= playerPos.getX() + 1)
+      );
     }
+    Assertions.assertEquals(removed, removedBlockPositions.size());
   }
 
   private CommandContext<ServerCommandSource> createCommandContext() {
