@@ -3,6 +3,7 @@ package com.adilhanney.replaceblocksmod.commands;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -23,10 +24,6 @@ public class RemoveGrassCommand {
   private static final int Z_RADIUS = X_RADIUS;
   private static final int Y_RADIUS = 10;
 
-  public static final Block air = Registries.BLOCK.get(Identifier.of("minecraft:air"));
-  public static final Block shortGrass = Registries.BLOCK.get(Identifier.of("minecraft:short_grass"));
-  public static final Block tallGrass = Registries.BLOCK.get(Identifier.of("minecraft:tall_grass"));
-
   /**
    * Removes short and tall grass near the player.
    * Does not remove normal grass blocks.
@@ -46,8 +43,8 @@ public class RemoveGrassCommand {
         for (var dy = -Y_RADIUS; dy <= Y_RADIUS; dy++) {
           final var blockPos = playerPos.add(dx, dy, dz);
           final var oldBlockState = world.getBlockState(blockPos);
-          if (oldBlockState.isOf(shortGrass) || oldBlockState.isOf(tallGrass)) {
-            final var newBlockState = air.getDefaultState();
+          if (oldBlockState.isOf(Blocks.SHORT_GRASS) || oldBlockState.isOf(Blocks.TALL_GRASS)) {
+            final var newBlockState = Blocks.AIR.getDefaultState();
             Block.replace(oldBlockState, newBlockState, world, blockPos, Block.NOTIFY_ALL_AND_REDRAW);
             ++removed;
           } else if (dy > 0 && oldBlockState.isAir()) {

@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.Bootstrap;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,13 +22,11 @@ import static com.adilhanney.replaceblocksmod.commands.RemoveGrassCommand.*;
 
 public class RemoveGrassCommandTest {
   static final BlockPos playerPos = new BlockPos(100, 200, 300);
-  static Block grassBlock;
 
   @BeforeAll
   static void beforeAll() {
     SharedConstants.createGameVersion();
     Bootstrap.initialize();
-    grassBlock = Registries.BLOCK.get(Identifier.of("minecraft:grass_block"));
   }
 
   @Test
@@ -74,17 +73,17 @@ public class RemoveGrassCommandTest {
       final BlockPos blockPos = invocation.getArgument(0);
 
       if (blockPos.getY() < playerPos.getY()) {
-        return grassBlock.getDefaultState(); // Grass below player
+        return Blocks.GRASS_BLOCK.getDefaultState(); // Grass below player
       } else if (blockPos.getY() > playerPos.getY()) {
-        return air.getDefaultState(); // Air above player
+        return Blocks.AIR.getDefaultState(); // Air above player
       }
 
       if (blockPos.equals(playerPos)) {
-        return shortGrass.getDefaultState();
+        return Blocks.SHORT_GRASS.getDefaultState();
       } else if (blockPos.equals(playerPos.add(1, 0, 0)) || blockPos.equals(playerPos.add(-1, 0, 0))) {
-        return tallGrass.getDefaultState();
+        return Blocks.TALL_GRASS.getDefaultState();
       } else {
-        return air.getDefaultState();
+        return Blocks.AIR.getDefaultState();
       }
     });
   }
