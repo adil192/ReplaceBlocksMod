@@ -8,7 +8,9 @@
     "adil192"
   ],
   "contact": {
-    "sources": "https://github.com/adil192/ReplaceBlocksMod"
+    "sources": "https://github.com/adil192/ReplaceBlocksMod",
+    "homepage": "https://github.com/adil192/ReplaceBlocksMod",
+    "issues": "https://github.com/adil192/ReplaceBlocksMod/issues"
   },
   "license": "MIT",
   "icon": "assets/replaceblocksmod/icon.png",
@@ -20,7 +22,7 @@
   },
   "depends": {
     "fabricloader": ">=0.16.11",
-    "minecraft": "~1.21.1",
+    "minecraft": "~1.21",
     "java": ">=21",
     "fabric-api": "*"
   }
