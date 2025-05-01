@@ -88,7 +88,7 @@ tasks {
 
 fun getMinecraftVersionsForFileName(): String {
     return when (project.platform.mcVersionStr) {
-        "1.21.1" -> "1.21.0-1.21.3"
+        "1.21.1" -> "1.21.x"
         "1.20.1" -> "1.20.x"
         else -> project.platform.mcVersionStr
     }
@@ -96,7 +96,7 @@ fun getMinecraftVersionsForFileName(): String {
 
 fun getMinecraftVersionsForFabric(): String {
     return when (project.platform.mcVersionStr) {
-        "1.21.1" -> ">=1.21 <1.21.4"
+        "1.21.1" -> "~1.21"
         "1.20.1" -> "~1.20"
         else -> "~${project.platform.mcVersionStr}"
     }
