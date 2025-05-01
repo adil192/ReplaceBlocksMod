@@ -6,10 +6,6 @@ plugins {
 version = project.property("mod_version") as String
 group = project.property("maven_group") as String
 
-val minecraftVersion = project.property("minecraft_version") as String
-val yarnMappings = project.property("yarn_mappings") as String
-val loaderVersion = project.property("loader_version") as String
-
 val fabricApiVersion = when (project.platform.mcVersionStr) {
     "1.21.1" -> project.property("fabricApiVersion12101") as String
     "1.20.1" -> project.property("fabricApiVersion12001") as String
