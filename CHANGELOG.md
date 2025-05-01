@@ -1,3 +1,8 @@
+## v1.1.1
+
+- Extended compatibility to all 1.20.x and 1.21.x versions
+- Fixed the homepage and issues buttons not working in ModMenu
+
 ## v1.1.0
 
 - Replacing blocks with air is now treated as breaking the block
