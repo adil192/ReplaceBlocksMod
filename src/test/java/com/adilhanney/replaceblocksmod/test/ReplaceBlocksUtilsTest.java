@@ -6,7 +6,9 @@ import net.minecraft.Bootstrap;
 import net.minecraft.SharedConstants;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+//#if MC>=12101
 import net.minecraft.text.TextCodecs;
+//#endif
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +28,11 @@ public class ReplaceBlocksUtilsTest {
   }
 
   private String serializeText(Text text) {
+    //#if MC>=12101
     return gson.toJson(TextCodecs.CODEC.encodeStart(JsonOps.INSTANCE, text).getOrThrow());
+    //#else
+    //$$return Text.Serializer.toJson(text);
+    //#endif
   }
 
   private @NotNull ServerPlayerEntity mockPlayer(@Nullable String displayName, String name) {

@@ -23,9 +23,13 @@ public abstract class ReplaceBlocksUtils {
   }
 
   public static BlockState createBlockState(Block block, BlockPos blockPos, ServerPlayerEntity player) {
-    return block.getPlacementState(new ItemPlacementContext(
-        player, Hand.MAIN_HAND, ItemStack.EMPTY,
-        new BlockHitResult(blockPos.toBottomCenterPos(), Direction.UP, blockPos, false)
+    return block.getPlacementState(new ItemPlacementContext(player, Hand.MAIN_HAND, ItemStack.EMPTY, new BlockHitResult(
+            //#if MC>=12101
+            blockPos.toBottomCenterPos(),
+            //#else
+            //$$blockPos.toCenterPos(),
+            //#endif
+            Direction.UP, blockPos, false)
     ));
   }
 }
