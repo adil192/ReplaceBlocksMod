@@ -9,7 +9,6 @@ group = project.property("maven_group") as String
 val minecraftVersion = project.property("minecraft_version") as String
 val yarnMappings = project.property("yarn_mappings") as String
 val loaderVersion = project.property("loader_version") as String
-val mockitoVersion = project.property("mockito_version") as String
 
 val fabricApiVersion = when (project.platform.mcVersionStr) {
     "1.21.1" -> project.property("fabricApiVersion12101") as String
@@ -40,9 +39,6 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
-
-    testImplementation("net.fabricmc:fabric-loader-junit:${loaderVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
 }
 
 java {
@@ -90,10 +86,6 @@ tasks {
 
     clean {
         delete(finalJarsDir)
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }
 
